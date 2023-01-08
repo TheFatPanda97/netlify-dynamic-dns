@@ -20,4 +20,4 @@ Since Netlify does not support dynamic dns, this is a relatively simple script w
 2. `npm install`
 3. create and configure `.env` (have a look at .env.example)
 4. `./run.sh`
-5. Optional: you can configure the run.sh to be executed automatically through cron
+5. Optional: you can configure the `run.sh` to be executed automatically through cron
