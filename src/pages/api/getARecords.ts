@@ -1,22 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
-interface IRecord {
-  hostname: string;
-  type: string;
-  ttl: number;
-  priority: string | null;
-  weight: string | null;
-  port: string | null;
-  flag: string | null;
-  tag: string | null;
-  id: string;
-  site_id: string | null;
-  dns_zone_id: string;
-  errors: string[];
-  managed: boolean;
-  value: string;
-}
+import { getAllARecords } from '@/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { netlify_api_key, dns_zone } = req.query;
@@ -26,16 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { data } = await axios.get<IRecord[]>(
-      `https://api.netlify.com/api/v1/dns_zones/${dns_zone}/dns_records`,
-      {
-        headers: {
-          Authorization: `Bearer ${netlify_api_key}`,
-        },
-      },
-    );
-
-    const allARecords = data.filter((record) => record.type === 'A');
+    const allARecords = await getAllARecords(dns_zone, netlify_api_key);
     res.json(allARecords);
   } catch (error) {
     console.error(error);
