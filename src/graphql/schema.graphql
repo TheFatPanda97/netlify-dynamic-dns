@@ -3,7 +3,13 @@ type Query {
 }
 
 type Mutation {
-  deleteARecord(dns_zone: String!, record_id: String!): Record!
+  addOrUpdateARecord(
+    dns_zone: String!
+    host_name: String!
+    record_id: String
+    value: String
+  ): Record!
+  deleteRecord(dns_zone: String!, record_id: String!): Record!
 }
 
 type Record {
@@ -16,7 +22,7 @@ type Record {
   flag: String
   tag: String
   id: String
-  site_id: String!
+  site_id: String
   dns_zone_id: String!
   errors: [String!]
   managed: Boolean!

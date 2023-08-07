@@ -18,11 +18,20 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  deleteARecord: Record;
+  addOrUpdateARecord: Record;
+  deleteRecord: Record;
 };
 
 
-export type MutationDeleteARecordArgs = {
+export type MutationAddOrUpdateARecordArgs = {
+  dns_zone: Scalars['String']['input'];
+  host_name: Scalars['String']['input'];
+  record_id?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationDeleteRecordArgs = {
   dns_zone: Scalars['String']['input'];
   record_id: Scalars['String']['input'];
 };
@@ -47,7 +56,7 @@ export type Record = {
   managed: Scalars['Boolean']['output'];
   port?: Maybe<Scalars['String']['output']>;
   priority?: Maybe<Scalars['String']['output']>;
-  site_id: Scalars['String']['output'];
+  site_id?: Maybe<Scalars['String']['output']>;
   tag?: Maybe<Scalars['String']['output']>;
   ttl?: Maybe<Scalars['Int']['output']>;
   type: Scalars['String']['output'];
@@ -145,7 +154,8 @@ export type ResolversParentTypes = {
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  deleteARecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationDeleteARecordArgs, 'dns_zone' | 'record_id'>>;
+  addOrUpdateARecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationAddOrUpdateARecordArgs, 'dns_zone' | 'host_name'>>;
+  deleteRecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationDeleteRecordArgs, 'dns_zone' | 'record_id'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -161,7 +171,7 @@ export type RecordResolvers<ContextType = any, ParentType extends ResolversParen
   managed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   port?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   priority?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  site_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  site_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   tag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   ttl?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
