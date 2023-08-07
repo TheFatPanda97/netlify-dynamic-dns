@@ -1,23 +1,7 @@
 import util from 'node:util';
 import axios from 'axios';
 const exec = util.promisify(require('node:child_process').exec);
-
-export interface IRecord {
-  hostname: string;
-  type: string;
-  ttl: number;
-  priority: string | null;
-  weight: string | null;
-  port: string | null;
-  flag: string | null;
-  tag: string | null;
-  id: string;
-  site_id: string | null;
-  dns_zone_id: string;
-  errors: string[];
-  managed: boolean;
-  value: string;
-}
+import type { Record } from './types/schema';
 
 export const getPublicIP = async () => {
   const command = 'dig +short myip.opendns.com @resolver1.opendns.com';
@@ -28,7 +12,7 @@ export const getAllARecords = async (
   dns_zone: string | string[],
   netlify_api_key: string | string[],
 ) => {
-  const { data } = await axios.get<IRecord[]>(
+  const { data } = await axios.get<Record[]>(
     `https://api.netlify.com/api/v1/dns_zones/${dns_zone}/dns_records`,
     {
       headers: {

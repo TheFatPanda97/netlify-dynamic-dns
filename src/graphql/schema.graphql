@@ -1,25 +1,20 @@
 type Query {
-  hello: Record
+  ARecords(dns_zone: String!, netlify_api_key: String!): [Record!]
 }
 
-type Record  {
-  hostname: Int
+type Record {
+  hostname: String!
+  type: String!
+  ttl: Int
+  priority: String
+  weight: String
+  port: String
+  flag: String
+  tag: String
+  id: String
+  site_id: String!
+  dns_zone_id: String!
+  errors: [String!]
+  managed: Boolean!
+  value: String!
 }
-
-
-# type Record {
-#   hostname: String!
-#   type: String!
-#   ttl: Int
-#   priority: String
-#   weight: String
-#   port: String
-#   flag: String
-#   tag: String
-#   id: String
-#   site_id: String
-#   dns_zone_id: String
-#   errors: [String!]
-#   managed: boolean
-#   value: String
-# }
