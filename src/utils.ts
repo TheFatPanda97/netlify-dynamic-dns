@@ -8,6 +8,23 @@ export const getPublicIP = async () => {
   return exec(command);
 };
 
+export const getRecord = async (
+  dns_zone: string | string[],
+  netlify_api_key: string | string[],
+  record_id: string | string[],
+) => {
+  const { data } = await axios.get<Record>(
+    `https://api.netlify.com/api/v1/dns_zones/${dns_zone}/dns_records/${record_id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${netlify_api_key}`,
+      },
+    },
+  );
+
+  return data;
+};
+
 export const getAllARecords = async (
   dns_zone: string | string[],
   netlify_api_key: string | string[],

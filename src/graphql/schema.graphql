@@ -1,5 +1,9 @@
 type Query {
-  ARecords(dns_zone: String!, netlify_api_key: String!): [Record!]
+  getARecords(dns_zone: String!): [Record!]
+}
+
+type Mutation {
+  deleteARecord(dns_zone: String!, record_id: String!): Record!
 }
 
 type Record {

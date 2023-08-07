@@ -16,15 +16,25 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type Query = {
-  __typename?: 'Query';
-  ARecords?: Maybe<Array<Record>>;
+export type Mutation = {
+  __typename?: 'Mutation';
+  deleteARecord: Record;
 };
 
 
-export type QueryARecordsArgs = {
+export type MutationDeleteARecordArgs = {
   dns_zone: Scalars['String']['input'];
-  netlify_api_key: Scalars['String']['input'];
+  record_id: Scalars['String']['input'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  getARecords?: Maybe<Array<Record>>;
+};
+
+
+export type QueryGetARecordsArgs = {
+  dns_zone: Scalars['String']['input'];
 };
 
 export type Record = {
@@ -118,6 +128,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Record: ResolverTypeWrapper<Record>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -127,13 +138,18 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   Int: Scalars['Int']['output'];
+  Mutation: {};
   Query: {};
   Record: Record;
   String: Scalars['String']['output'];
 };
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  deleteARecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationDeleteARecordArgs, 'dns_zone' | 'record_id'>>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  ARecords?: Resolver<Maybe<Array<ResolversTypes['Record']>>, ParentType, ContextType, RequireFields<QueryARecordsArgs, 'dns_zone' | 'netlify_api_key'>>;
+  getARecords?: Resolver<Maybe<Array<ResolversTypes['Record']>>, ParentType, ContextType, RequireFields<QueryGetARecordsArgs, 'dns_zone'>>;
 };
 
 export type RecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Record'] = ResolversParentTypes['Record']> = {
@@ -155,6 +171,7 @@ export type RecordResolvers<ContextType = any, ParentType extends ResolversParen
 };
 
 export type Resolvers<ContextType = any> = {
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Record?: RecordResolvers<ContextType>;
 };
