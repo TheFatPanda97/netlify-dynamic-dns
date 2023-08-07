@@ -1,0 +1,2 @@
+schema: 'src/graphql/schema.graphql'
+schemaPath: 'src/graphql/schema.graphql'

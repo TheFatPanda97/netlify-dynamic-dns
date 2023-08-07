@@ -1,0 +1,25 @@
+type Query {
+  hello: Record
+}
+
+type Record  {
+  hostname: Int
+}
+
+
+# type Record {
+#   hostname: String!
+#   type: String!
+#   ttl: Int
+#   priority: String
+#   weight: String
+#   port: String
+#   flag: String
+#   tag: String
+#   id: String
+#   site_id: String
+#   dns_zone_id: String
+#   errors: [String!]
+#   managed: boolean
+#   value: String
+# }
