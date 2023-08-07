@@ -22,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { netlify_api_key, dns_zone } = req.query;
 
   if (!netlify_api_key || !dns_zone) {
-    return res.status(400).send("missing netlify_api_key or dns_zone");
+    return res.status(400).send('missing netlify_api_key or dns_zone');
   }
 
   try {
@@ -35,11 +35,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     );
 
-    console.log(data);
-
-    res.send('nice');
+    const allARecords = data.filter((record) => record.type === 'A');
+    res.json(allARecords);
   } catch (error) {
     console.error(error);
-    res.status(500).send("error occured while fetching records")
+    res.status(500).send('error occured while fetching records');
   }
 }
