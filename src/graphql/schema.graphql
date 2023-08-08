@@ -1,5 +1,5 @@
 type Query {
-  getARecords(dns_zone: String!): [Record!]
+  getARecords(dns_zone: String!): [Record!]!
 }
 
 type Mutation {
@@ -21,7 +21,7 @@ type Record {
   port: String
   flag: String
   tag: String
-  id: String
+  id: String!
   site_id: String
   dns_zone_id: String!
   errors: [String!]

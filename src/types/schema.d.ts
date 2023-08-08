@@ -38,7 +38,7 @@ export type MutationDeleteRecordArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  getARecords?: Maybe<Array<Record>>;
+  getARecords: Array<Record>;
 };
 
 
@@ -52,7 +52,7 @@ export type Record = {
   errors?: Maybe<Array<Scalars['String']['output']>>;
   flag?: Maybe<Scalars['String']['output']>;
   hostname: Scalars['String']['output'];
-  id?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
   managed: Scalars['Boolean']['output'];
   port?: Maybe<Scalars['String']['output']>;
   priority?: Maybe<Scalars['String']['output']>;
@@ -159,7 +159,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getARecords?: Resolver<Maybe<Array<ResolversTypes['Record']>>, ParentType, ContextType, RequireFields<QueryGetARecordsArgs, 'dns_zone'>>;
+  getARecords?: Resolver<Array<ResolversTypes['Record']>, ParentType, ContextType, RequireFields<QueryGetARecordsArgs, 'dns_zone'>>;
 };
 
 export type RecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Record'] = ResolversParentTypes['Record']> = {
@@ -167,7 +167,7 @@ export type RecordResolvers<ContextType = any, ParentType extends ResolversParen
   errors?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   flag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   hostname?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   managed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   port?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   priority?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

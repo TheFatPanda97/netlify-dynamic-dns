@@ -8,8 +8,10 @@ const nextConfig = {
     });
 
     return config;
+  },
+  env: {
+    NETLIFY_API_KEY: process.env.NETLIFY_API_KEY
   }
-
 }
 
 module.exports = nextConfig
