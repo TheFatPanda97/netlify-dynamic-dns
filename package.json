@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "gql": "gql-language-server",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "docker:build": "docker build -t ddns ."
   },
   "dependencies": {
     "@apollo/client": "^3.8.0",

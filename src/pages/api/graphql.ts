@@ -1,5 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
+/// <reference path="./graphql.d.ts" />
 import typeDefs from '@/graphql/schema.graphql';
 
 import { getAllARecords, deleteRecord, getRecord, addARecord } from '@/utils';
@@ -39,6 +40,6 @@ export default startServerAndCreateNextHandler(server, {
   context: async (req, res) => ({
     req,
     res,
-    netlify_api_key: (req.headers.netlify_api_key as string) || '',
+    netlify_api_key: process.env.NETLIFY_API_KEY || '',
   }),
 });
