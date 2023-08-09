@@ -21,9 +21,11 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
         await deleteRecord(dns_zone, netlify_api_key, record_id);
       }
 
-      console.log(`Log: add record ${host_name} with value ${value}`);
+      const record = await addARecord(dns_zone, netlify_api_key, host_name, value);
 
-      return await addARecord(dns_zone, netlify_api_key, host_name, value);
+      console.log(`Log: add record ${record.hostname} with value ${value}`);
+
+      return record;
     },
     deleteRecord: async (_root: any, { dns_zone, record_id }, { netlify_api_key }) => {
       const oldRecord = await getRecord(dns_zone, netlify_api_key, record_id);
