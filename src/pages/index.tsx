@@ -113,17 +113,20 @@ const IndexPage: FC = () => {
                 setLoading(true);
                 closeModal();
 
-                const res = await addFn({
-                  variables: {
-                    dns_zone: dnsZone,
-                    host_name: hostname,
-                    value,
-                  },
-                });
+                try {
+                  const res = await addFn({
+                    variables: {
+                      dns_zone: dnsZone,
+                      host_name: hostname,
+                      value,
+                    },
+                  });
+                  alert(`A Record ${res.data?.addOrUpdateARecord.hostname} has been created`);
+                  refresh();
+                } catch (error) {
+                  alert('Something went wrong');
+                }
 
-                alert(`A Record ${res.data?.addOrUpdateARecord.hostname} has been created`);
-
-                refresh();
                 setLoading(false);
               }}
             >
