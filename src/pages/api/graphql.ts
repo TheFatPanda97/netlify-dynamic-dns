@@ -23,7 +23,7 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
 
       const record = await addARecord(dns_zone, netlify_api_key, host_name, value);
 
-      console.log(`Log: add record ${record.hostname} with value ${value}`);
+      console.log(`LOG: added record <${record.hostname}, ${record.value}>`);
 
       return record;
     },
@@ -31,7 +31,7 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
       const oldRecord = await getRecord(dns_zone, netlify_api_key, record_id);
       await deleteRecord(dns_zone, netlify_api_key, record_id);
 
-      console.log(`Log: deleted record ${oldRecord.hostname} with value ${oldRecord.value}`);
+      console.log(`LOG: deleted record <${oldRecord.hostname}, ${oldRecord.value}>`);
 
       return oldRecord;
     },
