@@ -14,11 +14,19 @@ interface IProps {
   }[];
   refresh: () => void;
   dns_zone: string;
+  openModal: () => void;
+  loading: boolean;
+  setLoading: (val: boolean) => void;
 }
 
-const RecordTable: FC<IProps> = ({ records, refresh, dns_zone }) => {
-  const [loading, setLoading] = useState(false);
-
+const RecordTable: FC<IProps> = ({
+  records,
+  refresh,
+  dns_zone,
+  openModal,
+  loading,
+  setLoading,
+}) => {
   const deleteMutation = gql(`
     mutation DeleteRecord($dns_zone: String!, $record_id: String!) {
       deleteRecord(dns_zone: $dns_zone, record_id: $record_id) {
@@ -49,7 +57,7 @@ const RecordTable: FC<IProps> = ({ records, refresh, dns_zone }) => {
                   className={classNames({ 'text-slate-500': loading })}
                   disabled={loading}
                   onClick={async () => {
-                    const yes = confirm('Do you want to delete this one?');
+                    const yes = confirm('Do you want to delete this record?');
 
                     if (yes) {
                       setLoading(true);
@@ -73,6 +81,19 @@ const RecordTable: FC<IProps> = ({ records, refresh, dns_zone }) => {
               </td>
             </tr>
           ))}
+          {records.length > 0 && (
+            <tr>
+              <td>
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5"
+                  type="button"
+                  onClick={openModal}
+                >
+                  Add Record
+                </button>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
