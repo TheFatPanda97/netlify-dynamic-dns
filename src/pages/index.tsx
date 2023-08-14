@@ -13,6 +13,7 @@ const IndexPage: FC = () => {
   const [hostname, setHostName] = useState('');
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isPublicIP, setIsPublicIP] = useState(false);
 
   const query = gql(`
     query GetAllARecords($dns_zone: String!) {
@@ -26,7 +27,7 @@ const IndexPage: FC = () => {
 
   const addMutation = gql(`
     mutation AddRecord($dns_zone: String!, $host_name: String!, $value: String) {
-      addOrUpdateARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {
+      addARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {
         id
         hostname
         value
@@ -85,7 +86,12 @@ const IndexPage: FC = () => {
           </div>
           <div className="mt-5 mb-4">
             <label className="relative inline-flex items-center cursor-pointer">
-              <input type="checkbox" value="" className="sr-only peer" />
+              <input
+                type="checkbox"
+                checked={isPublicIP}
+                className="sr-only peer"
+                onChange={() => setIsPublicIP(!isPublicIP)}
+              />
               <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
               <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                 Set Value as Public IP Address
@@ -110,6 +116,14 @@ const IndexPage: FC = () => {
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5"
               type="button"
               onClick={async () => {
+                if (hostname === '') {
+                  return alert('Please enter a hostname');
+                }
+
+                if (!isPublicIP && value === '') {
+                  return alert('Please enter a value');
+                }
+
                 setLoading(true);
                 closeModal();
 
@@ -121,7 +135,7 @@ const IndexPage: FC = () => {
                       value,
                     },
                   });
-                  alert(`A Record ${res.data?.addOrUpdateARecord.hostname} has been created`);
+                  alert(`A Record ${res.data?.addARecord.hostname} has been created`);
                   refresh();
                 } catch (error) {
                   alert('Something went wrong');

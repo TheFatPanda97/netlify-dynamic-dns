@@ -3,12 +3,8 @@ type Query {
 }
 
 type Mutation {
-  addOrUpdateARecord(
-    dns_zone: String!
-    host_name: String!
-    record_id: String
-    value: String
-  ): Record!
+  addARecord(dns_zone: String!, host_name: String!, value: String): Record!
+  updateARecord(dns_zone: String!, host_name: String!, record_id: String!, value: String): Record!
   deleteRecord(dns_zone: String!, record_id: String!): Record!
 }
 

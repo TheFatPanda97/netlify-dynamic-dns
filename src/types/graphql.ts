@@ -18,15 +18,15 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addOrUpdateARecord: Record;
+  addARecord: Record;
   deleteRecord: Record;
+  updateARecord: Record;
 };
 
 
-export type MutationAddOrUpdateARecordArgs = {
+export type MutationAddARecordArgs = {
   dns_zone: Scalars['String']['input'];
   host_name: Scalars['String']['input'];
-  record_id?: InputMaybe<Scalars['String']['input']>;
   value?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -34,6 +34,14 @@ export type MutationAddOrUpdateARecordArgs = {
 export type MutationDeleteRecordArgs = {
   dns_zone: Scalars['String']['input'];
   record_id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateARecordArgs = {
+  dns_zone: Scalars['String']['input'];
+  host_name: Scalars['String']['input'];
+  record_id: Scalars['String']['input'];
+  value?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -86,9 +94,9 @@ export type AddRecordMutationVariables = Exact<{
 }>;
 
 
-export type AddRecordMutation = { __typename?: 'Mutation', addOrUpdateARecord: { __typename?: 'Record', id: string, hostname: string, value: string } };
+export type AddRecordMutation = { __typename?: 'Mutation', addARecord: { __typename?: 'Record', id: string, hostname: string, value: string } };
 
 
 export const DeleteRecordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteRecord"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"record_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteRecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"dns_zone"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}}},{"kind":"Argument","name":{"kind":"Name","value":"record_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"record_id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hostname"}}]}}]}}]} as unknown as DocumentNode<DeleteRecordMutation, DeleteRecordMutationVariables>;
 export const GetAllARecordsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllARecords"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getARecords"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"dns_zone"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"hostname"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetAllARecordsQuery, GetAllARecordsQueryVariables>;
-export const AddRecordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddRecord"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"host_name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"value"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addOrUpdateARecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"dns_zone"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}}},{"kind":"Argument","name":{"kind":"Name","value":"host_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"host_name"}}},{"kind":"Argument","name":{"kind":"Name","value":"value"},"value":{"kind":"Variable","name":{"kind":"Name","value":"value"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"hostname"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<AddRecordMutation, AddRecordMutationVariables>;
+export const AddRecordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"AddRecord"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"host_name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"value"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addARecord"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"dns_zone"},"value":{"kind":"Variable","name":{"kind":"Name","value":"dns_zone"}}},{"kind":"Argument","name":{"kind":"Name","value":"host_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"host_name"}}},{"kind":"Argument","name":{"kind":"Name","value":"value"},"value":{"kind":"Variable","name":{"kind":"Name","value":"value"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"hostname"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<AddRecordMutation, AddRecordMutationVariables>;

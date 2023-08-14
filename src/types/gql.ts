@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n    mutation DeleteRecord($dns_zone: String!, $record_id: String!) {\n      deleteRecord(dns_zone: $dns_zone, record_id: $record_id) {\n          hostname\n      }\n    }\n  ": types.DeleteRecordDocument,
     "\n    query GetAllARecords($dns_zone: String!) {\n      getARecords(dns_zone: $dns_zone) {\n        id\n        hostname\n        value\n      }\n    }\n  ": types.GetAllARecordsDocument,
-    "\n    mutation AddRecord($dns_zone: String!, $host_name: String!, $value: String) {\n      addOrUpdateARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {\n        id\n        hostname\n        value\n      }\n    }\n  ": types.AddRecordDocument,
+    "\n    mutation AddRecord($dns_zone: String!, $host_name: String!, $value: String) {\n      addARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {\n        id\n        hostname\n        value\n      }\n    }\n  ": types.AddRecordDocument,
 };
 
 /**
@@ -43,7 +43,7 @@ export function gql(source: "\n    query GetAllARecords($dns_zone: String!) {\n 
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n    mutation AddRecord($dns_zone: String!, $host_name: String!, $value: String) {\n      addOrUpdateARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {\n        id\n        hostname\n        value\n      }\n    }\n  "): (typeof documents)["\n    mutation AddRecord($dns_zone: String!, $host_name: String!, $value: String) {\n      addOrUpdateARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {\n        id\n        hostname\n        value\n      }\n    }\n  "];
+export function gql(source: "\n    mutation AddRecord($dns_zone: String!, $host_name: String!, $value: String) {\n      addARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {\n        id\n        hostname\n        value\n      }\n    }\n  "): (typeof documents)["\n    mutation AddRecord($dns_zone: String!, $host_name: String!, $value: String) {\n      addARecord(dns_zone: $dns_zone, host_name: $host_name, value: $value) {\n        id\n        hostname\n        value\n      }\n    }\n  "];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

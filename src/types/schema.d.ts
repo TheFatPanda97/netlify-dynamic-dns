@@ -18,15 +18,15 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addOrUpdateARecord: Record;
+  addARecord: Record;
   deleteRecord: Record;
+  updateARecord: Record;
 };
 
 
-export type MutationAddOrUpdateARecordArgs = {
+export type MutationAddARecordArgs = {
   dns_zone: Scalars['String']['input'];
   host_name: Scalars['String']['input'];
-  record_id?: InputMaybe<Scalars['String']['input']>;
   value?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -34,6 +34,14 @@ export type MutationAddOrUpdateARecordArgs = {
 export type MutationDeleteRecordArgs = {
   dns_zone: Scalars['String']['input'];
   record_id: Scalars['String']['input'];
+};
+
+
+export type MutationUpdateARecordArgs = {
+  dns_zone: Scalars['String']['input'];
+  host_name: Scalars['String']['input'];
+  record_id: Scalars['String']['input'];
+  value?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -154,8 +162,9 @@ export type ResolversParentTypes = {
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  addOrUpdateARecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationAddOrUpdateARecordArgs, 'dns_zone' | 'host_name'>>;
+  addARecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationAddARecordArgs, 'dns_zone' | 'host_name'>>;
   deleteRecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationDeleteRecordArgs, 'dns_zone' | 'record_id'>>;
+  updateARecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationUpdateARecordArgs, 'dns_zone' | 'host_name' | 'record_id'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
