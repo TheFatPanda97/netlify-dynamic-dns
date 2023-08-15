@@ -3,7 +3,8 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next';
 /// <reference path="./graphql.d.ts" />
 import typeDefs from '@/graphql/schema.graphql';
 
-import { getAllARecords, deleteRecord, getRecord, addARecord, getSubDomain } from '@/utils';
+import { getAllARecords, deleteRecord, getRecord, addARecord } from '@/lib/requests';
+import { getSubDomain } from '@/lib/utils';
 import type { Resolvers } from '@/types/schema';
 
 const resolvers: Resolvers<{ netlify_api_key: string }> = {

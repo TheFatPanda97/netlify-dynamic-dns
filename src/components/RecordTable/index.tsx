@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import classNames from 'classnames';
 import { useMutation } from '@apollo/client';
 import { gql } from '@/types/gql';
 
+import { getSubDomain } from '@/lib/utils';
 import styles from './styles.module.scss';
 import type { FC } from 'react';
 
@@ -17,6 +17,9 @@ interface IProps {
   openModal: () => void;
   loading: boolean;
   setLoading: (val: boolean) => void;
+  setModalHostName: (val: string) => void;
+  setModalValue: (val: string) => void;
+  setRecordID: (val: string) => void;
 }
 
 const RecordTable: FC<IProps> = ({
@@ -26,6 +29,9 @@ const RecordTable: FC<IProps> = ({
   openModal,
   loading,
   setLoading,
+  setModalHostName,
+  setModalValue,
+  setRecordID,
 }) => {
   const deleteMutation = gql(`
     mutation DeleteRecord($dns_zone: String!, $record_id: String!) {
@@ -48,7 +54,16 @@ const RecordTable: FC<IProps> = ({
               <td>{hostname}</td>
               <td>{value}</td>
               <td>
-                <button className={classNames({ 'text-slate-500': loading })} disabled={loading}>
+                <button
+                  className={classNames({ 'text-slate-500': loading })}
+                  disabled={loading}
+                  onClick={() => {
+                    setModalHostName(getSubDomain(hostname));
+                    setModalValue(value);
+                    setRecordID(id);
+                    openModal();
+                  }}
+                >
                   ✏️ Edit
                 </button>
               </td>

@@ -12,6 +12,7 @@ const IndexPage: FC = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [hostname, setHostName] = useState('');
   const [value, setValue] = useState('');
+  const [recordID, setRecordID] = useState('');
   const [loading, setLoading] = useState(false);
   const [isPublicIP, setIsPublicIP] = useState(false);
 
@@ -35,7 +36,21 @@ const IndexPage: FC = () => {
     }
   `);
 
+  const updateMutation = gql(`
+    mutation UpdateRecord($dns_zone: String!, $host_name: String!, $record_id: String!, $value: String) {
+      updateARecord(dns_zone: $dns_zone, host_name: $host_name, record_id: $record_id, value: $value) {
+        id
+        hostname
+        value
+      }
+    }
+  `);
+
   const [addFn] = useMutation(addMutation, {
+    fetchPolicy: 'network-only',
+  });
+
+  const [updateFn] = useMutation(updateMutation, {
     fetchPolicy: 'network-only',
   });
 
@@ -49,7 +64,12 @@ const IndexPage: FC = () => {
   };
 
   const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const closeModal = () => {
+    setIsOpen(false);
+    setHostName('');
+    setValue('');
+    setRecordID('');
+  };
 
   return (
     <>
@@ -128,14 +148,27 @@ const IndexPage: FC = () => {
                 closeModal();
 
                 try {
-                  const res = await addFn({
-                    variables: {
-                      dns_zone: dnsZone,
-                      host_name: hostname,
-                      value,
-                    },
-                  });
-                  alert(`A Record ${res.data?.addARecord.hostname} has been created`);
+                  if (recordID) {
+                    const res = await updateFn({
+                      variables: {
+                        dns_zone: dnsZone,
+                        host_name: hostname,
+                        record_id: recordID,
+                        value,
+                      },
+                    });
+                    alert(`A Record ${res.data?.updateARecord.hostname} has been updated`);
+                  } else {
+                    const res = await addFn({
+                      variables: {
+                        dns_zone: dnsZone,
+                        host_name: hostname,
+                        value,
+                      },
+                    });
+                    alert(`A Record ${res.data?.addARecord.hostname} has been added`);
+                  }
+
                   refresh();
                 } catch (error) {
                   alert('Something went wrong');
@@ -144,7 +177,7 @@ const IndexPage: FC = () => {
                 setLoading(false);
               }}
             >
-              Confirm
+              {recordID === '' ? 'Add Record' : 'Update Record'}
             </button>
             <button
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -190,6 +223,9 @@ const IndexPage: FC = () => {
           openModal={openModal}
           loading={loading}
           setLoading={setLoading}
+          setModalHostName={setHostName}
+          setModalValue={setValue}
+          setRecordID={setRecordID}
         />
       </div>
     </>

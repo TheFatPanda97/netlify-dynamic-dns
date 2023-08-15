@@ -1,11 +1,10 @@
 FROM node:18
 RUN apt-get update
-RUN sudo apt-get -y upgrade
+RUN apt-get -y upgrade
 RUN apt-get install dnsutils -y
-RUN sudo apt-get install -y sqlite3 libsqlite3-dev
-RUN mkdir src/db
-RUN sqlite3 /src/db/data.db < /src/db/db.schema
+RUN apt-get install -y sqlite3 libsqlite3-dev
 COPY . ./
+RUN sqlite3 /src/db/data.db < /src/db/db.schema
 RUN npm ci
 RUN npm run build
 EXPOSE 3000
