@@ -39,7 +39,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_HOST=db
-      - CRON_INTERVAL='* */1 * * * *' # the cron job will execute every hour to update the indicated records to be public dns
+      - CRON_INTERVAL='* */1 * * * *' # the cron job will execute every hour to update the indicated records to be the public ip address of the host machine
     ports:
       - 3000:3000
     depends_on:
