@@ -1,4 +1,4 @@
-import type { ITableSchema } from '@/db/DAO';
+import type { ITableSchema } from '@/lib/DAO';
 import type { OmittedNetlifyRecord } from './requests';
 
 export const getSubDomain = (str: string) => {

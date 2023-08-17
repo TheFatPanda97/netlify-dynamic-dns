@@ -5,7 +5,7 @@ import typeDefs from '@/graphql/schema.graphql';
 
 import { getAllARecords, deleteRecord, getRecord, addARecord } from '@/lib/requests';
 import { getSubDomain, appendIsPublicIP } from '@/lib/utils';
-import * as sql from '@/db/DAO';
+import * as sql from '@/lib/DAO';
 import type { Resolvers } from '@/types/schema';
 
 const resolvers: Resolvers<{ netlify_api_key: string }> = {
