@@ -3,6 +3,8 @@ require('dotenv').config();
 const cron = require('node-cron');
 const { request, gql } = require('graphql-request');
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 const sqlQuery = async (query, variables) => {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
@@ -121,9 +123,12 @@ const updatePublicIPRecords = async () => {
 };
 
 (async () => {
+  await sleep(60000);
+
   try {
     await initDatabase();
   } catch (error) {
+    console.error('Failed to initalize database');
     return console.error(error);
   }
 
@@ -131,12 +136,14 @@ const updatePublicIPRecords = async () => {
     try {
       await syncDatabseWithNetlify();
     } catch (error) {
+      console.error('Failed to sycn database with netlify');
       console.error(error);
     }
 
     try {
       await updatePublicIPRecords();
     } catch (error) {
+      console('Failed to update records');
       console.error(error);
     }
   });

@@ -81,16 +81,23 @@ const RecordTable: FC<IProps> = ({
                     if (yes) {
                       setLoading(true);
 
-                      const res = await deleteFn({
-                        variables: {
-                          dns_zone,
-                          record_id: id,
-                        },
-                      });
+                      try {
+                        const res = await deleteFn({
+                          variables: {
+                            dns_zone,
+                            record_id: id,
+                          },
+                        });
 
-                      alert(`A Record ${res.data?.deleteRecord.hostname} has been deleted`);
+                        alert(`A Record ${res.data?.deleteRecord.hostname} has been deleted`);
 
-                      refresh();
+                        refresh();
+                      } catch (error) {
+                        refresh();
+                        alert(`Record could not be deleted, please refresh and try again`);
+                        console.error(error);
+                      }
+
                       setLoading(false);
                     }
                   }}
