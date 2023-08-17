@@ -14,6 +14,8 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
       const netlifyRecords = await getAllARecords(dns_zone, netlify_api_key);
       const sqlRecords = (await sql.getAllRecords(dns_zone)).rows;
 
+      console.log('LOG: fetched all A records');
+
       return appendIsPublicIP(netlifyRecords, sqlRecords);
     },
   },
@@ -36,8 +38,6 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
       { dns_zone, host_name, value, record_id },
       { netlify_api_key },
     ) => {
-      console.log(dns_zone, value, record_id);
-
       const oldRecord = await getRecord(dns_zone, netlify_api_key, record_id);
       const oldSubDomain = getSubDomain(oldRecord.hostname);
       const sqlRecord: sql.ITableSchema | undefined = (await sql.getRecord(record_id)).rows[0];

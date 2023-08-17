@@ -6,13 +6,17 @@ export interface ITableSchema {
   dns_zone: string;
 }
 
-export const getAllRecords = async (dns_zone: string) => {
-  const client = new Client({
-    host: 'localhost',
+const getClient = () =>
+  new Client({
+    host: process.env.POSTGRES_HOST,
     port: 5432,
-    user: 'postgres',
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
     database: 'ddns',
   });
+
+export const getAllRecords = async (dns_zone: string) => {
+  const client = getClient();
 
   await client.connect();
 
@@ -27,12 +31,7 @@ export const getAllRecords = async (dns_zone: string) => {
 };
 
 export const getRecord = async (record_id: string) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    database: 'ddns',
-  });
+  const client = getClient();
 
   await client.connect();
 
@@ -47,12 +46,7 @@ export const getRecord = async (record_id: string) => {
 };
 
 export const addRecord = async (record_id: string, hostname: string, dns_zone: string) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    database: 'ddns',
-  });
+  const client = getClient();
 
   await client.connect();
 
@@ -67,12 +61,7 @@ export const addRecord = async (record_id: string, hostname: string, dns_zone: s
 };
 
 export const deleteRecord = async (record_id: string) => {
-  const client = new Client({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    database: 'ddns',
-  });
+  const client = getClient();
 
   await client.connect();
 
