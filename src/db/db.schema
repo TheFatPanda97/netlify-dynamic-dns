@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS cron_records (
-	id INTEGER PRIMARY KEY,
-  hostname TEXT NOT NULL,
-  value TEXT NOT NULL
-);

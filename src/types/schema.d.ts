@@ -44,6 +44,24 @@ export type MutationUpdateARecordArgs = {
   value?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type NetlifyRecord = {
+  __typename?: 'NetlifyRecord';
+  dns_zone_id: Scalars['String']['output'];
+  errors?: Maybe<Array<Scalars['String']['output']>>;
+  flag?: Maybe<Scalars['String']['output']>;
+  hostname: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  managed: Scalars['Boolean']['output'];
+  port?: Maybe<Scalars['String']['output']>;
+  priority?: Maybe<Scalars['String']['output']>;
+  site_id?: Maybe<Scalars['String']['output']>;
+  tag?: Maybe<Scalars['String']['output']>;
+  ttl?: Maybe<Scalars['Int']['output']>;
+  type: Scalars['String']['output'];
+  value: Scalars['String']['output'];
+  weight?: Maybe<Scalars['String']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   getARecords: Array<Record>;
@@ -61,6 +79,7 @@ export type Record = {
   flag?: Maybe<Scalars['String']['output']>;
   hostname: Scalars['String']['output'];
   id: Scalars['String']['output'];
+  is_public_ip: Scalars['Boolean']['output'];
   managed: Scalars['Boolean']['output'];
   port?: Maybe<Scalars['String']['output']>;
   priority?: Maybe<Scalars['String']['output']>;
@@ -146,6 +165,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
+  NetlifyRecord: ResolverTypeWrapper<NetlifyRecord>;
   Query: ResolverTypeWrapper<{}>;
   Record: ResolverTypeWrapper<Record>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
@@ -156,6 +176,7 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
+  NetlifyRecord: NetlifyRecord;
   Query: {};
   Record: Record;
   String: Scalars['String']['output'];
@@ -167,11 +188,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   updateARecord?: Resolver<ResolversTypes['Record'], ParentType, ContextType, RequireFields<MutationUpdateARecordArgs, 'dns_zone' | 'host_name' | 'record_id'>>;
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getARecords?: Resolver<Array<ResolversTypes['Record']>, ParentType, ContextType, RequireFields<QueryGetARecordsArgs, 'dns_zone'>>;
-};
-
-export type RecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Record'] = ResolversParentTypes['Record']> = {
+export type NetlifyRecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['NetlifyRecord'] = ResolversParentTypes['NetlifyRecord']> = {
   dns_zone_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   errors?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   flag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -189,8 +206,32 @@ export type RecordResolvers<ContextType = any, ParentType extends ResolversParen
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  getARecords?: Resolver<Array<ResolversTypes['Record']>, ParentType, ContextType, RequireFields<QueryGetARecordsArgs, 'dns_zone'>>;
+};
+
+export type RecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Record'] = ResolversParentTypes['Record']> = {
+  dns_zone_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  errors?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
+  flag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hostname?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  is_public_ip?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  managed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  port?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  priority?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  site_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  tag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  ttl?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  weight?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
+  NetlifyRecord?: NetlifyRecordResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Record?: RecordResolvers<ContextType>;
 };

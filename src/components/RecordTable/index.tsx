@@ -11,6 +11,7 @@ interface IProps {
     id: string;
     hostname: string;
     value: string;
+    is_public_ip: boolean;
   }[];
   refresh: () => void;
   dns_zone: string;
@@ -20,6 +21,7 @@ interface IProps {
   setModalHostName: (val: string) => void;
   setModalValue: (val: string) => void;
   setRecordID: (val: string) => void;
+  setIsPublicIP: (val: boolean) => void;
 }
 
 const RecordTable: FC<IProps> = ({
@@ -32,6 +34,7 @@ const RecordTable: FC<IProps> = ({
   setModalHostName,
   setModalValue,
   setRecordID,
+  setIsPublicIP,
 }) => {
   const deleteMutation = gql(`
     mutation DeleteRecord($dns_zone: String!, $record_id: String!) {
@@ -49,10 +52,10 @@ const RecordTable: FC<IProps> = ({
     <div>
       <table className={classNames('table-auto w-full rounded-sm', styles['record-table'])}>
         <tbody>
-          {records.map(({ id, hostname, value }) => (
+          {records.map(({ id, hostname, value, is_public_ip }) => (
             <tr key={id}>
               <td>{hostname}</td>
-              <td>{value}</td>
+              <td>{value + (is_public_ip ? ' (public ip)' : '')}</td>
               <td>
                 <button
                   className={classNames({ 'text-slate-500': loading })}
@@ -61,6 +64,7 @@ const RecordTable: FC<IProps> = ({
                     setModalHostName(getSubDomain(hostname));
                     setModalValue(value);
                     setRecordID(id);
+                    setIsPublicIP(is_public_ip);
                     openModal();
                   }}
                 >

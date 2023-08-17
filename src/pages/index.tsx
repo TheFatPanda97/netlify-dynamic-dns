@@ -22,6 +22,7 @@ const IndexPage: FC = () => {
         id
         hostname
         value
+        is_public_ip
       }
     }
   `);
@@ -32,6 +33,7 @@ const IndexPage: FC = () => {
         id
         hostname
         value
+        is_public_ip
       }
     }
   `);
@@ -42,6 +44,7 @@ const IndexPage: FC = () => {
         id
         hostname
         value
+        is_public_ip
       }
     }
   `);
@@ -118,19 +121,21 @@ const IndexPage: FC = () => {
               </span>
             </label>
           </div>
-          <div className="mb-6">
-            <label className="block text-sm font-bold mb-2" htmlFor="value">
-              Value
-            </label>
-            <input
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
-              id="value"
-              type="text"
-              placeholder="eg. 192.168.4.23"
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-            />
-          </div>
+          {!isPublicIP && (
+            <div className="mb-6">
+              <label className="block text-sm font-bold mb-2" htmlFor="value">
+                Value
+              </label>
+              <input
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-full"
+                id="value"
+                type="text"
+                placeholder="eg. 192.168.4.23"
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+              />
+            </div>
+          )}
           <div className="flex items-center justify-start">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5"
@@ -154,7 +159,7 @@ const IndexPage: FC = () => {
                         dns_zone: dnsZone,
                         host_name: hostname,
                         record_id: recordID,
-                        value,
+                        value: !isPublicIP ? value : '',
                       },
                     });
                     alert(`A Record ${res.data?.updateARecord.hostname} has been updated`);
@@ -163,7 +168,7 @@ const IndexPage: FC = () => {
                       variables: {
                         dns_zone: dnsZone,
                         host_name: hostname,
-                        value,
+                        value: !isPublicIP ? value : '',
                       },
                     });
                     alert(`A Record ${res.data?.addARecord.hostname} has been added`);
@@ -226,6 +231,7 @@ const IndexPage: FC = () => {
           setModalHostName={setHostName}
           setModalValue={setValue}
           setRecordID={setRecordID}
+          setIsPublicIP={setIsPublicIP}
         />
       </div>
     </>

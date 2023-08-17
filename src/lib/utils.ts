@@ -1,3 +1,6 @@
+import type { ITableSchema } from '@/db/DAO';
+import type { OmittedNetlifyRecord } from './requests';
+
 export const getSubDomain = (str: string) => {
   const regex = /(?:https?:\/\/)?((?:\w+\.)+(?=\w+\.\w+))/gm;
 
@@ -17,4 +20,25 @@ export const getSubDomain = (str: string) => {
   }
 
   return allMatches[0]?.substring(0, allMatches[0].length - 1) || '';
+};
+
+export const appendIsPublicIP = (
+  netlifyRecords: OmittedNetlifyRecord[],
+  sqlRecords: ITableSchema[],
+) => {
+  const parsedSqlRecords = sqlRecords.reduce(
+    (acc, { record_id, hostname, dns_zone: dnszone }) => ({
+      ...acc,
+      [record_id]: {
+        hostname,
+        dns_zone: dnszone,
+      },
+    }),
+    {},
+  );
+
+  return netlifyRecords.map((record) => ({
+    ...record,
+    is_public_ip: record.id in parsedSqlRecords,
+  }));
 };

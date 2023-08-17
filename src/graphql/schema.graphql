@@ -8,6 +8,23 @@ type Mutation {
   deleteRecord(dns_zone: String!, record_id: String!): Record!
 }
 
+type NetlifyRecord {
+  hostname: String!
+  type: String!
+  ttl: Int
+  priority: String
+  weight: String
+  port: String
+  flag: String
+  tag: String
+  id: String!
+  site_id: String
+  dns_zone_id: String!
+  errors: [String!]
+  managed: Boolean!
+  value: String!
+}
+
 type Record {
   hostname: String!
   type: String!
@@ -23,4 +40,5 @@ type Record {
   errors: [String!]
   managed: Boolean!
   value: String!
+  is_public_ip: Boolean!
 }

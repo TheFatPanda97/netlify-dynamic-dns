@@ -1,7 +1,9 @@
 import util from 'node:util';
 import axios from 'axios';
 const exec = util.promisify(require('node:child_process').exec);
-import type { Record, MutationAddARecordArgs } from '../types/schema';
+import type { NetlifyRecord, MutationAddARecordArgs } from '../types/schema';
+
+export type OmittedNetlifyRecord = Omit<NetlifyRecord, '__typename'>;
 
 export const getPublicIP = async () => {
   const command = 'dig +short myip.opendns.com @resolver1.opendns.com';
@@ -21,7 +23,7 @@ export const addARecord = async (
     publicIP = stdout.trim();
   }
 
-  const { data } = await axios.post<Record>(
+  const { data } = await axios.post<OmittedNetlifyRecord>(
     `https://api.netlify.com/api/v1/dns_zones/${dns_zone}/dns_records`,
     {
       type: 'A',
@@ -39,7 +41,7 @@ export const addARecord = async (
 };
 
 export const getRecord = async (dns_zone: string, netlify_api_key: string, record_id: string) => {
-  const { data } = await axios.get<Record>(
+  const { data } = await axios.get<OmittedNetlifyRecord>(
     `https://api.netlify.com/api/v1/dns_zones/${dns_zone}/dns_records/${record_id}`,
     {
       headers: {
@@ -52,7 +54,7 @@ export const getRecord = async (dns_zone: string, netlify_api_key: string, recor
 };
 
 export const getAllARecords = async (dns_zone: string, netlify_api_key: string) => {
-  const { data } = await axios.get<Record[]>(
+  const { data } = await axios.get<OmittedNetlifyRecord[]>(
     `https://api.netlify.com/api/v1/dns_zones/${dns_zone}/dns_records`,
     {
       headers: {
