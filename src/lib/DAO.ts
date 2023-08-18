@@ -4,6 +4,7 @@ export interface ITableSchema {
   record_id: string;
   hostname: string;
   dns_zone: string;
+  created_at: Date;
 }
 
 const getClient = () =>

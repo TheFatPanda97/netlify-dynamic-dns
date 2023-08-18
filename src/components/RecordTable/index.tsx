@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useMutation } from '@apollo/client';
 import { gql } from '@/types/gql';
 
-import { getSubDomain } from '@/lib/utils';
+import { getSubDomain, parseISOString } from '@/lib/utils';
 import styles from './styles.module.scss';
 import type { FC } from 'react';
 
@@ -12,6 +12,7 @@ interface IProps {
     hostname: string;
     value: string;
     is_public_ip: boolean;
+    created_at?: string | null;
   }[];
   refresh: () => void;
   dns_zone: string;
@@ -52,10 +53,15 @@ const RecordTable: FC<IProps> = ({
     <div>
       <table className={classNames('table-auto w-full rounded-sm', styles['record-table'])}>
         <tbody>
-          {records.map(({ id, hostname, value, is_public_ip }) => (
+          {records.map(({ id, hostname, value, is_public_ip, created_at }) => (
             <tr key={id}>
               <td>{hostname}</td>
-              <td>{value + (is_public_ip ? ' (public ip)' : '')}</td>
+              <td>
+                {value +
+                  (is_public_ip
+                    ? ` (public ip, last updated: ${parseISOString(created_at)?.toLocaleString()})`
+                    : '')}
+              </td>
               <td>
                 <button
                   className={classNames({ 'text-slate-500': loading })}

@@ -74,6 +74,7 @@ export type QueryGetARecordsArgs = {
 
 export type Record = {
   __typename?: 'Record';
+  created_at?: Maybe<Scalars['String']['output']>;
   dns_zone_id: Scalars['String']['output'];
   errors?: Maybe<Array<Scalars['String']['output']>>;
   flag?: Maybe<Scalars['String']['output']>;
@@ -211,6 +212,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type RecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Record'] = ResolversParentTypes['Record']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   dns_zone_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   errors?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
   flag?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

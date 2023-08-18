@@ -23,6 +23,7 @@ const IndexPage: FC = () => {
         hostname
         value
         is_public_ip
+        created_at
       }
     }
   `);
@@ -34,6 +35,7 @@ const IndexPage: FC = () => {
         hostname
         value
         is_public_ip
+        created_at
       }
     }
   `);
@@ -45,6 +47,7 @@ const IndexPage: FC = () => {
         hostname
         value
         is_public_ip
+        created_at
       }
     }
   `);

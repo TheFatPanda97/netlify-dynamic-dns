@@ -5,9 +5,10 @@ import type { NetlifyRecord, MutationAddARecordArgs } from '../types/schema';
 
 export type OmittedNetlifyRecord = Omit<NetlifyRecord, '__typename'>;
 
-export const getPublicIP = async () => {
+export const getPublicIP = async (): Promise<string> => {
   const command = 'dig +short myip.opendns.com @resolver1.opendns.com';
-  return exec(command);
+  const { stdout } = await exec(command);
+  return stdout.trim();
 };
 
 export const addARecord = async (
@@ -19,8 +20,7 @@ export const addARecord = async (
   let publicIP = null;
 
   if (!value) {
-    const { stdout } = await getPublicIP();
-    publicIP = stdout.trim();
+    publicIP = await getPublicIP();
   }
 
   const { data } = await axios.post<OmittedNetlifyRecord>(
