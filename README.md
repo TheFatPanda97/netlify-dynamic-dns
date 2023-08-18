@@ -31,11 +31,14 @@ Since Netlify does not support dynamic dns, this is a simple client written in N
 ---
 version: "3"
 
+volumes:
+  ddns_db_volume:
+
 services:
   ddns:
     image: tfpanda97/netlify-ddns:latest
     environment:
-      - NETLIFY_API_KEY=you_key
+      - NETLIFY_API_KEY=zcDCIG2C60czNPTKzLvU9ntG2UzuO9er7940SlwMrW4
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_HOST=db
@@ -52,5 +55,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=ddns
-
+    ports:
+      - 5432:5432
+    volumes:
+      - ddns_db_volume:/var/lib/postgresql/data
 ```
