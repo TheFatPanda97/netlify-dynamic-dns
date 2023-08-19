@@ -38,7 +38,7 @@ services:
   ddns:
     image: tfpanda97/netlify-ddns:latest
     environment:
-      - NETLIFY_API_KEY=zcDCIG2C60czNPTKzLvU9ntG2UzuO9er7940SlwMrW4
+      - NETLIFY_API_KEY=your_key
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_HOST=db
