@@ -26,7 +26,7 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
 
       // public ip
       if (!value) {
-        const sqlRes = await sql.addRecord(record.id, record.hostname, dns_zone);
+        const sqlRes = await sql.addRecord(record.id, getSubDomain(record.hostname), dns_zone);
         created_at = sqlRes.rows[0].created_at;
       }
 
@@ -64,7 +64,11 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
 
         // public ip
         if (!value) {
-          const newSqlRecord = await sql.addRecord(newRecord.id, newRecord.hostname, dns_zone);
+          const newSqlRecord = await sql.addRecord(
+            newRecord.id,
+            getSubDomain(newRecord.hostname),
+            dns_zone,
+          );
           created_at = newSqlRecord.rows[0].created_at;
         }
 

@@ -90,13 +90,11 @@ const updatePublicIPRecords = async () => {
         $dns_zone: String!
         $host_name: String!
         $record_id: String!
-        $value: String
       ) {
         updateARecord(
           dns_zone: $dns_zone
           host_name: $host_name
           record_id: $record_id
-          value: $value
         ) {
           hostname
         }
