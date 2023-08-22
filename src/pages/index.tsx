@@ -199,10 +199,7 @@ const IndexPage: FC = () => {
       </Modal>
       <div className="index rounded-sm m-8 pb-1">
         <div>
-          <label
-            htmlFor="dns_zone"
-            className="block mb-2 text-2xl text-gray-900 text-white"
-          >
+          <label htmlFor="dns_zone" className="block mb-2 text-2xl text-gray-900 text-white">
             DNS Zone
           </label>
           <div className="flex">
@@ -215,7 +212,10 @@ const IndexPage: FC = () => {
               value={dnsInput}
               onChange={(e) => setDNSInput(e.target.value)}
             />
-            <button className="inline" onClick={() => setDNSZone(dnsInput)}>
+            <button
+              className="inline"
+              onClick={async () => (dnsZone !== dnsInput ? setDNSZone(dnsInput) : await refresh())}
+            >
               ✅ Confirm
             </button>
           </div>
