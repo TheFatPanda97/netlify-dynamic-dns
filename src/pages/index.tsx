@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RecordTable from '@/components/RecordTable';
 import { useQuery, useMutation } from '@apollo/client';
 import { gql } from '@/types/gql';
@@ -76,6 +76,16 @@ const IndexPage: FC = () => {
     setValue('');
     setRecordID('');
   };
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const savedDNSZone = window.localStorage.getItem('dns_zone');
+
+      if (savedDNSZone) {
+        setDNSInput(savedDNSZone);
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -214,7 +224,14 @@ const IndexPage: FC = () => {
             />
             <button
               className="inline"
-              onClick={async () => (dnsZone !== dnsInput ? setDNSZone(dnsInput) : await refresh())}
+              onClick={async () => {
+                if (dnsZone !== dnsInput) {
+                  setDNSZone(dnsInput);
+                  window.localStorage.setItem('dns_zone', dnsInput);
+                } else {
+                  await refresh();
+                }
+              }}
             >
               ✅ Confirm
             </button>
