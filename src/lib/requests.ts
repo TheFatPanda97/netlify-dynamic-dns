@@ -1,14 +1,14 @@
-import util from 'node:util';
 import axios from 'axios';
-const exec = util.promisify(require('node:child_process').exec);
 import type { NetlifyRecord, MutationAddARecordArgs } from '../types/schema';
 
 export type OmittedNetlifyRecord = Omit<NetlifyRecord, '__typename'>;
 
-export const getPublicIP = async (): Promise<string> => {
-  const command = 'dig +short myip.opendns.com @resolver1.opendns.com';
-  const { stdout } = await exec(command);
-  return stdout.trim();
+export const getPublicIP = async () => {
+  const {
+    data: { ip },
+  } = await axios.get<{ ip: string }>('https://myipv4.p1.opendns.com/get_my_ip');
+
+  return ip;
 };
 
 export const addARecord = async (

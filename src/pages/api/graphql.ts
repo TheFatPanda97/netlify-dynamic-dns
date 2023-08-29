@@ -45,13 +45,6 @@ const resolvers: Resolvers<{ netlify_api_key: string }> = {
       const newPublicIP = await getPublicIP();
       const newValue = value || newPublicIP;
 
-      console.log(`old sub domain: ${oldSubDomain}`);
-      console.log(`new host name: ${host_name}`);
-      console.log(`old value: ${oldRecord.value}`);
-      console.log(`new input value: ${value}`);
-      console.log(`new real value: ${newValue}`);
-      console.log(`old sql record: ${JSON.stringify(oldSqlRecord)}`);
-
       // delete the old record only if either the hostname or value has changed
       if (
         host_name !== oldSubDomain ||
